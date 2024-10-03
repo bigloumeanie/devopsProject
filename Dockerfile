@@ -1,5 +1,5 @@
 # use an official python runtime as a parent image
-FROM python:3.9slim
+FROM python:3.9-slim
 
 # set working directory in container
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN pip install flask
 EXPOSE 5001
 
 # define env variables
-ENV NAME World
+ENV NAME=World
 
 #run app.py when container launches
 CMD ["python", "app.py"]
