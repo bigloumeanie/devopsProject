@@ -5,7 +5,7 @@ pipeline {
         //Env Variables for Creds
         GITHUB_CREDENTIALS = credentials('github-creds')
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-        DOCKER_IMAGE = 'lacarbonaradev/'
+        DOCKER_IMAGE = 'llacarbonaradev/flask-app'
     }
     
     stages {

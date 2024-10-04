@@ -7,6 +7,9 @@ WORKDIR /app
 # copy current directory contents into container
 COPY . /app/
 
+# install any required dependencies listed in the container at /app
+RUN pip install --no-cache-dir -r requirements.txt
+
 # install flask from requirements
 RUN pip install flask
 
@@ -14,7 +17,7 @@ RUN pip install flask
 EXPOSE 5001
 
 # define env variables
-ENV NAME=World
+#ENV NAME=World
 
 #run app.py when container launches
 CMD ["python", "app.py"]
