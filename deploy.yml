@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Deploy the app container
+      docker_container:
+        name: flask_app
+        image: flask-app
+        ports:
+          - "80:5001"

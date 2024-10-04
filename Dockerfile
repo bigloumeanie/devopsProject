@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # copy current directory contents into container
-COPY . /app
+COPY . /app/
 
 # install flask from requirements
 RUN pip install flask
