@@ -5,7 +5,7 @@ pipeline {
         //Env Variables for Creds
         GITHUB_CREDENTIALS = credentials('github-credentials')
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        DOCKER_IMAGE = 'flask-app'
+        DOCKER_IMAGE = 'lacarbonaradev/flask-app'
     }
     
     stages {
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image using the Dockerfile from the repo
-                    docker.build('flask-app:latest')
+                    docker.build("${DOCKER_IMAGE}:latest")
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     // Run tests in docker container
-                    docker.image('flas-app:latest').inside {
+                    docker.image("${DOCKER_IMAGE}:latest").inside {
                         //sh 'pytest tests/'
                         sh 'echo "Running Sample Tests...'
                     }
@@ -50,7 +50,7 @@ pipeline {
                 script {
                     // Log into dockerhub and push image
                     docker.withRegistry('https://index.docker.io/v1/', 'DOCKERHUB_CREDENTIALS') {
-                        docker.image('flask-app:latest').push()
+                        docker.image("${DOCKER_IMAGE}:latest").push()
                     }
                 }
             }
