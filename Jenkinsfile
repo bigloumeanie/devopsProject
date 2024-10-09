@@ -16,7 +16,7 @@ pipeline {
                     // Checkout code from github using Github Creds
                     git url: 'https://github.com/bigloumeanie/devopsProject.git',
                     branch: 'main',
-                    credentialsId: 'github-credentials'
+                    credentialsId: "${GITHUB_CREDENTIALS}"
                 }
             }
         }
