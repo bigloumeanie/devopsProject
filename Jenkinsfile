@@ -6,7 +6,7 @@ pipeline {
         GITHUB_CREDENTIALS = credentials('github-creds')
         GITHUB_REPO = 'https://github.com/bigloumeanie/devopsProject.git'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-        DOCKER_IMAGE = 'lacarbonaradev/devopsproject-app'
+        DOCKER_IMAGE = 'lacarbonaradev/devops-app'
     }
 
     stages {
