@@ -3,65 +3,55 @@ pipeline {
     
     environment {
         //Env Variables for Creds
-        GITHUB_CREDENTIALS = credentials('github-credentials')
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        GITHUB_CREDENTIALS = credentials('github-creds')
+        GITHUB_REPO = 'https://github.com/bigloumeanie/devopsProject.git'
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         DOCKER_IMAGE = 'lacarbonaradev/devopsproject-app'
     }
-    
+
     stages {
-        // Clone Github Repo using Github Creds
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                script {
-                    // Checkout code from github using Github Creds
-                    git url: 'https://github.com/bigloumeanie/devopsProject.git',
-                    branch: 'main',
-                    credentialsId: "${GITHUB_CREDENTIALS}"
-                }
+                // Clone the repository
+                git url: "${DOCKER_IMAGE}", branch: 'main'
             }
         }
         
-        // Build Docker Image
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image using the Dockerfile from the repo
-                    docker.build("${DOCKER_IMAGE}:latest")
+                    // Build the Docker image
+                    docker.build("${DOCKER_IMAGE}")
                 }
             }
         }
-        
-        // Run any tests if necessary
+
         stage('Run Unit Tests') {
             steps {
                 script {
-                    // Run tests in docker container
-                    docker.image("${DOCKER_IMAGE}:latest").inside {
-                        //sh 'pytest tests/'
-                        sh 'echo "Running Sample Tests...'
+                    // Run the Docker container and execute tests
+                    docker.image("${DOCKER_IMAGE}").inside {
+                        sh 'pytest tests/'
                     }
                 }
             }
         }
         
-        // Push Docker Image > DockerHub using dockerhub-creds
         stage('Push Docker Image to DockerHub') {
             steps {
                 script {
-                    // Log into dockerhub and push image
                     docker.withRegistry('https://index.docker.io/v1/', 'DOCKERHUB_CREDENTIALS') {
-                        docker.image("${DOCKER_IMAGE}:latest").push()
+                        docker.image("${DOCKER_IMAGE}").push()
                     }
                 }
             }
         }
     }
-    
-    // Cleanup Docker Images after Job is done
+
     post {
         always {
-            // Clean up docker image after pipeline is done
-            sh 'docker rmi ${DOCKER_IMAGE}:latest'
+            // Clean up Docker images
+            sh 'docker rmi ${DOCKER_IMAGE}'
         }
     }
 }
