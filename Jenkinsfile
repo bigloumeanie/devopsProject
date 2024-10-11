@@ -6,7 +6,7 @@ pipeline {
         GITHUB_CREDENTIALS = credentials('github-credentials')
         GITHUB_REPO = 'https://github.com/bigloumeanie/devopsProject.git'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-        DOCKER_IMAGE = 'lacarbonaradev/devopsproject-app'
+        DOCKER_IMAGE = 'lacarbonaradev/dev-app'
     }
 pipeline {
     agent any
@@ -15,9 +15,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    git url: 'https://github.com/yourusername/your-repo.git',
+                    git url: "${GITHUB_REPO}",
                         branch: 'main',
-                        credentialsId: 'github-credentials'
+                        credentialsId: "${GITHUB_CREDENTIALS}"
                 }
             }
         }

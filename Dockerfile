@@ -13,11 +13,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # install flask from requirements
 RUN pip install flask
 
-# make port 5001 available to world outside the container
+# make port 5000 available to world outside the container
 EXPOSE 5001
 
-# define env variables
-#ENV NAME=World
+#define env variables
+ENV NAME=DockerApp
 
 #run app.py when container launches
 CMD ["python", "app.py"]
