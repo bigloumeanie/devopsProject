@@ -11,7 +11,7 @@ COPY . /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # install flask from requirements
-RUN pip install flask
+# RUN pip install flask
 
 # make port 5000 available to world outside the container
 EXPOSE 5001

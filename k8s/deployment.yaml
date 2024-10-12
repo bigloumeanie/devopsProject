@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dev-app
+  template:
+    metadata:
+      labels:
+        app: dev-app
+    spec:
+      containers:
+        - name: dev-app
+          image: lacarbonara/dev-app
+          ports:
+          - containerPort: 5001
